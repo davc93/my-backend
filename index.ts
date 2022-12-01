@@ -1,31 +1,16 @@
-import express, {
-  Request,
-  Response,
-  ErrorRequestHandler,
-  NextFunction,
-} from "express";
+import express, { Request, Response, ErrorRequestHandler, NextFunction } from "express";
 const app = express();
-import { checkAuth } from "./middlewares/auth";
 import { config } from "./config";
 import { initFirebase } from "./firebase";
+import services from './components/services/network'
+import users from './components/users/network'
+import projects from './components/projects/network'
 
-app.use(express.json());
 initFirebase();
-
-app.get(
-  "/",
-  checkAuth,
-  (
-    err: ErrorRequestHandler,
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    res.json({
-      message: "Authorized",
-    });
-  }
-);
+app.use(express.json());
+app.use('/api/services',services)
+app.use('/api/projects',projects)
+app.use('/api/users',users)
 app.listen(config.PORT, () => {
   console.log(`escuchando en el ${config.PORT}`);
 });
