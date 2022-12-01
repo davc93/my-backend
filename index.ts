@@ -1,16 +1,31 @@
-import express from 'express'
-const app = express()
-import {applicationDefault, initializeApp} from 'firebase-admin/app'
-import serviceAccount from './firebase/serviceAccountKey.json'
+import express, {
+  Request,
+  Response,
+  ErrorRequestHandler,
+  NextFunction,
+} from "express";
+const app = express();
+import { checkAuth } from "./middlewares/auth";
+import { config } from "./config";
+import { initFirebase } from "./firebase";
 
-initializeApp({
-    credential:applicationDefault()
-})
+app.use(express.json());
+initFirebase()
 
-app.use(express.json())
-app.listen(3000,()=>{
-
-    console.log('escuchando en el 3000')
-})
-
-
+app.get(
+  "/",
+  checkAuth,
+  (
+    err: ErrorRequestHandler,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    res.json({
+      message: "Authorized",
+    });
+  }
+);
+app.listen(config.PORT, () => {
+  console.log(`escuchando en el ${config.PORT}`);
+});

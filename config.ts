@@ -8,7 +8,7 @@ const DB = {
 
 }
 
-export const config: any = {
-
-    MONGO:`${DB.DB_NAME}`
+export const config= {
+    PORT: process.env.PORT ?? 3000,
+    
 }
