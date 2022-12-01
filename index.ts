@@ -10,7 +10,7 @@ import { config } from "./config";
 import { initFirebase } from "./firebase";
 
 app.use(express.json());
-initFirebase()
+initFirebase();
 
 app.get(
   "/",
