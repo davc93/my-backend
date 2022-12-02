@@ -1,31 +1,29 @@
 
-const collection = 'notifications'
+const collection = 'projects'
 const controller  = (injectedStore:any) => {
     const store = injectedStore
 
-    const upsert = async (req:any) => {
+    const upsert = async (data:any) => {
+      
+      const response = await store.upsert(data,collection)
+      return 'Ingreso exitoso'
+      
+      
 
-    const data = {
-        body: req.body,
-        headers: req.headers,
-      };
-      if (data.body) {
-
-        store.upsert(data,collection)
-        return {
-            message:'Todo bien'
-        }
-      } else {
-
-        return {
-            message:'No viene nada'
-        }
-      }
-
+    }
+    const list = async () => {
+      const services = await store.list(collection)
+      return services
+    }
+    const get =async (id:string) => {
+      const service = await store.get(id,collection)
+      return service
     }
 
     return {
-        upsert
+        upsert,
+        list,
+        get
     }
 }
 

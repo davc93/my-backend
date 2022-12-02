@@ -1,5 +1,5 @@
 
-const collection = 'services'
+const collection = 'labels'
 const controller  = (injectedStore:any) => {
     const store = injectedStore
 

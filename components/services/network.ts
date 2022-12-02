@@ -1,28 +1,34 @@
 import express from "express";
 import { checkAuth } from "../../middlewares/auth";
+import { success } from "../../network/response";
 import controller from "./index";
 
 const router = express.Router();
 router.post("/", checkAuth,async (req, res, next) => {
-    try {
-        const response = await controller.upsert(req.body)
-        res.json(response)
+    
+    const response = await controller.upsert(req.body)
+    success(req,res,response,200)
         
-    } catch (error) {
-        next(error)
-    }
 });
 router.get('/',async (req,res,next)=>{
 
-    try {
-        console.log('paso por aqui');
-        // const response = await controller.list()
-        // res.json(response)
-    } catch {
-        next
-    }
+    
+
+    const services = await controller.list()
+    res.json(services)
+    
+    
 
 })
+router.get('/:id',async (req,res,next)=>{
 
+    
+
+    const service = await controller.get(req.params.id)
+    res.json(service)
+    
+    
+
+})
 
 export default router;
