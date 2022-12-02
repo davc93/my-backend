@@ -16,7 +16,7 @@ function error (req: Request, res:Response, message:string, status:number) {
     let statusMessage = message || 'Internal server error';
 
     res.status(statusCode).send({
-        error: false,
+        error: true,
         status: status,
         body: message,
     });
