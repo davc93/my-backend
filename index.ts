@@ -1,4 +1,5 @@
 import express, { Request, Response, ErrorRequestHandler, NextFunction } from "express";
+import cors from 'cors'
 const app = express();
 import { config } from "./config";
 import { initFirebase } from "./firebase";
@@ -7,6 +8,7 @@ import users from './components/users/network'
 import projects from './components/projects/network'
 
 initFirebase();
+app.use(cors())
 app.use(express.json());
 app.use('/api/services',services)
 app.use('/api/projects',projects)
